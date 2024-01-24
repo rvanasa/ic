@@ -35,7 +35,7 @@ mod tests;
 // the headers size to 8 KiB. We chose a lower limit because headers observed on most providers
 // fit in the constant defined below, and if there is spike, then the payload size adjustment
 // should take care of that.
-const HEADER_SIZE_LIMIT: u64 = 2 * 1024;
+pub const HEADER_SIZE_LIMIT: u64 = 2 * 1024;
 
 // This constant comes from the IC specification:
 // > If provided, the value must not exceed 2MB
@@ -811,7 +811,7 @@ where
         let payload = serde_json::to_string(&rpc_request).unwrap();
         log!(TRACE_HTTP, "Calling url: {}, with payload: {payload}", url);
 
-        let effective_size_estimate = response_size_estimate.get() + HEADER_SIZE_LIMIT;
+        let effective_size_estimate = response_size_estimate.get();
         let transform_op = O::response_transform()
             .as_ref()
             .map(|t| {

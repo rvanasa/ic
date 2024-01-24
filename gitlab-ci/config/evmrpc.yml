@@ -1,4 +1,4 @@
 build-cketh-minter:
   image: rustlang/rust:nightly
   script:
-    - argo +nightly build --package ic-cketh-minter
+    - cargo +nightly build --package ic-cketh-minter

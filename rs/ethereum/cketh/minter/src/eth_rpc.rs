@@ -710,6 +710,8 @@ pub type HttpOutcallResult<T> = Result<T, HttpOutcallError>;
 
 #[derive(Clone, Hash, Debug, PartialEq, Eq, PartialOrd, Ord, CandidType, Deserialize)]
 pub enum ValidationError {
+    // #[error("{0}")]
+    Custom(String),
     // #[error("invalid hex data: {0}")]
     InvalidHex(String),
     // #[error("URL parse error: {0}")]
@@ -717,9 +719,9 @@ pub enum ValidationError {
     // #[error("hostname not allowed: {0}")]
     HostNotAllowed(String),
     // #[error("credential path not allowed: {0}")]
-    CredentialPathNotAllowed(String),
+    CredentialPathNotAllowed,
     // #[error("credential header not allowed: {0}")]
-    CredentialHeaderNotAllowed(String),
+    CredentialHeaderNotAllowed,
 }
 
 pub fn are_errors_consistent<T: PartialEq>(
@@ -833,7 +835,14 @@ where
             )),
         };
 
-        let response = match T::http_request(provider, &eth_method, request, effective_size_estimate).await {
+        let response = match T::http_request(
+            provider,
+            &eth_method,
+            request,
+            effective_size_estimate,
+        )
+        .await
+        {
             Err(RpcError::HttpOutcallError(HttpOutcallError::IcError { code, message }))
                 if is_response_too_large(&code, &message) =>
             {

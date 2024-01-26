@@ -718,9 +718,9 @@ pub enum ValidationError {
     UrlParseError(String),
     // #[error("hostname not allowed: {0}")]
     HostNotAllowed(String),
-    // #[error("credential path not allowed: {0}")]
+    // #[error("credential path not allowed")]
     CredentialPathNotAllowed,
-    // #[error("credential header not allowed: {0}")]
+    // #[error("credential header not allowed")]
     CredentialHeaderNotAllowed,
 }
 

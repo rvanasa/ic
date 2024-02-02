@@ -16,6 +16,9 @@ pub(crate) const SEPOLIA_PROVIDERS: &[RpcService] = &[
     RpcService::EthSepolia(EthSepoliaService::PublicNode),
 ];
 
+// Default RPC services for unknown EVM network
+pub(crate) const UNKNOWN_PROVIDERS: &[RpcService] = &[];
+
 #[derive(Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Serialize, Deserialize, CandidType)]
 pub struct RpcApi {
     pub url: String,

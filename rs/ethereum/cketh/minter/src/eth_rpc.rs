@@ -307,7 +307,7 @@ pub struct GetLogsParam {
     /// Topics are order-dependent.
     /// Each topic can also be an array of DATA with "or" options.
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub topics: Vec<FixedSizeData>,
+    pub topics: Vec<Vec<FixedSizeData>>,
 }
 
 /// An entry of the [`eth_getLogs`](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getlogs) call reply.

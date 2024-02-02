@@ -806,7 +806,7 @@ where
         name: "Content-Type".to_string(),
         value: "application/json".to_string(),
     }];
-    headers.extend(api.headers.clone());
+    headers.extend(api.headers.map(|vec| vec.clone()).unwrap_or_default());
     let mut retries = 0;
     loop {
         rpc_request.id = mutate_state(State::next_request_id);

@@ -22,7 +22,7 @@ pub(crate) const UNKNOWN_PROVIDERS: &[RpcService] = &[];
 #[derive(Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Serialize, Deserialize, CandidType)]
 pub struct RpcApi {
     pub url: String,
-    pub headers: Vec<HttpHeader>,
+    pub headers: Option<Vec<HttpHeader>>,
 }
 
 #[derive(Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Serialize, Deserialize, CandidType)]

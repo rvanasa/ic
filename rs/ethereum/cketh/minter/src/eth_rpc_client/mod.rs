@@ -332,7 +332,7 @@ impl<T: PartialEq> MultiCallResults<T> {
                 }
                 _ => match first_error {
                     None => {
-                        first_error = Some((*provider, result));
+                        first_error = Some((provider.clone(), result));
                     }
                     Some((first_error_provider, error)) => {
                         if !are_errors_consistent(&error, result) {

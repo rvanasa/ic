@@ -36,7 +36,9 @@ impl std::fmt::Debug for RpcService {
         match self {
             RpcService::EthMainnet(service) => write!(f, "{:?}", service),
             RpcService::EthSepolia(service) => write!(f, "{:?}", service),
-            RpcService::Custom(_) => write!(f, "Custom {{ .. }}"), // redact credentials
+            RpcService::Chain(chain_id) => write!(f, "Chain({})", chain_id),
+            RpcService::Provider(provider_id) => write!(f, "Provider({})", provider_id),
+            RpcService::Custom(_) => write!(f, "Custom(..)"), // redact credentials
         }
     }
 }

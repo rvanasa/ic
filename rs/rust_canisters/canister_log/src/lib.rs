@@ -56,8 +56,13 @@ macro_rules! log {
         (&$sink).append($crate::LogEntry {
             timestamp: $crate::now(),
             message,
-            file: match std::file!() {
-                file if !file.starts_with("src/") => {
+            file: {
+                let file = std::file!();
+                if file.starts_with("src/") {
+                    file.to_string()
+                }
+                else {
+                    // Rewrite absolute path
                     format!(
                         ".../{}",
                         std::path::Path::new(&std::ffi::OsStr::new(file))
@@ -65,8 +70,7 @@ macro_rules! log {
                             .and_then(|s| s.to_str())
                             .unwrap_or("<unknown>"),
                     )
-                },
-                file => file.to_string(),
+                }
             },
             line: std::line!(),
             counter: $crate::entry_counter::increment()

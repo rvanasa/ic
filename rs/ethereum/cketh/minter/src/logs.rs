@@ -18,17 +18,7 @@ pub const TRACE_HTTP: PrintProxySink = PrintProxySink("TRACE_HTTP", &TRACE_HTTP_
 pub struct PrintProxySink(&'static str, &'static GlobalBuffer);
 
 impl Sink for PrintProxySink {
-    fn append(&self, mut entry: ic_canister_log::LogEntry) {
-        if !entry.file.starts_with("src/") {
-            // Rewrite absolute file path
-            entry.file = format!(
-                ".../{}",
-                std::path::Path::new(&OsStr::new(&entry.file))
-                    .file_name()
-                    .and_then(|s| s.to_str())
-                    .unwrap_or("<unknown>"),
-            );
-        }
+    fn append(&self, entry: ic_canister_log::LogEntry) {
         ic_cdk::println!("{} {}:{} {}", self.0, entry.file, entry.line, entry.message);
         self.1.append(entry)
     }
